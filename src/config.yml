@@ -1,0 +1,133 @@
+SPEED:
+  Item: 331
+  SpeedBoost: 1
+  Haste: 1
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+MOON:
+  Item: 288
+  JumpBoost: 1
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+SCUBA:
+  Item: 338
+  ScubaTime: 10
+  Haste: 2
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+LAVA:
+  Item: 378
+  LavaTime: 2
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+RAGE:
+  Item: 369
+  LightningDamage: 5
+  FireTime: 4
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+PEACE:
+  Item: 372
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+ASSASSIN:
+  Item: 368
+  SneakDamage: 4
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+CREEPER:
+  Item: 289
+  ExplosionSize: 5
+  BlockDamage: true
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+SPIDER:
+  Item: 341
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+VAMPIRE:
+  Item: 370
+  Percent: 25
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
+
+MINER:
+  Item: 266
+  Haste: 1
+  ArmorTypes:
+    - leather
+    - iron
+    - gold
+    - chainmail
+    - diamond
+    - pumpkin
+    - skull
