@@ -29,6 +29,13 @@ public class CombatListeners implements Listener {
         plugin = armorAbilities;
     }
 
+    private static void strikeLightning(Entity p) {
+        Location coords = p.getLocation();
+        coords.getWorld().strikeLightningEffect(coords);
+        Block block = coords.getBlock();
+        block.setType(Material.AIR);
+    }
+
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
@@ -78,7 +85,7 @@ public class CombatListeners implements Listener {
 
         //stop fall damage
         if ((event.getCause() == DamageCause.FALL) && abilities.containsKey(Ability.MOON) &&
-             (abilities.get(Ability.MOON) == 4) && player.hasPermission("armorabilities.nofalldamage")) {
+            (abilities.get(Ability.MOON) == 4) && player.hasPermission("armorabilities.nofalldamage")) {
             event.setCancelled(true);
         }
 
@@ -163,13 +170,6 @@ public class CombatListeners implements Listener {
             event.blockList().clear();
             explosionLocations.remove(event.getLocation());
         }
-    }
-
-    private static void strikeLightning(Entity p) {
-        Location coords = p.getLocation();
-        coords.getWorld().strikeLightningEffect(coords);
-        Block block = coords.getBlock();
-        block.setType(Material.AIR);
     }
 
     private static final class DropItems implements Runnable {

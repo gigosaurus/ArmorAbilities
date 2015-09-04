@@ -45,13 +45,14 @@ public class InventoryClick implements Listener {
 
             if (inputAbility != outputAbility) {
                 if (inputAbility == null) {
-                    event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot rename your equipment to " + "start with an /ability");
-                } else {
                     event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot rename your /ability equipment!");
+                } else {
+                    event.getWhoClicked().sendMessage(
+                            ChatColor.RED + "You cannot rename your equipment to " + "start with an /ability");
                 }
+                event.setCancelled(true);
             }
         }
-
 
         if ((event.getSlotType() == SlotType.ARMOR) || (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
             plugin.getTask().addPlayer((Player) event.getWhoClicked());
@@ -70,8 +71,8 @@ public class InventoryClick implements Listener {
         if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             ItemStack item = event.getItem();
             if ((item != null) && item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-                Ability ability = AbilityManager.getAbility(
-                        ArmorUtils.WORD.split(item.getItemMeta().getDisplayName())[0]);
+                Ability ability =
+                        AbilityManager.getAbility(ArmorUtils.WORD.split(item.getItemMeta().getDisplayName())[0]);
                 if (ability != null) {
                     plugin.getTask().addPlayer(event.getPlayer());
                 }

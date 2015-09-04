@@ -20,10 +20,11 @@ public class AbilityInfo {
 
     /**
      * Create the ability info for an ability
-     * @param ability the ability
+     *
+     * @param ability  the ability
      * @param madeWith the name of the item the ability is made with
-     * @param item the id of the item the ability is made with
-     * @param types the
+     * @param item     the id of the item the ability is made with
+     * @param types    the
      */
     public AbilityInfo(Ability ability, String madeWith, int item, List<String> types) {
         for (String type : types) {
@@ -38,6 +39,7 @@ public class AbilityInfo {
 
     /**
      * Get the ability that belongs to this info object
+     *
      * @return the ability
      */
     public Ability getAbility() {
@@ -46,6 +48,7 @@ public class AbilityInfo {
 
     /**
      * Message all the information about this ability to the given player
+     *
      * @param player the player to inform about this ability
      */
     public void messageInfo(Player player) {
@@ -58,7 +61,9 @@ public class AbilityInfo {
 
     /**
      * Get a list of materials belonging to the given armor string
+     *
      * @param armorType the armor type
+     *
      * @return the materials relating to the given string
      */
     private ArrayList<Material> getArmor(String armorType) {

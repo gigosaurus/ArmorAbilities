@@ -15,7 +15,9 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerMoveListeners implements Listener {
 
@@ -27,6 +29,11 @@ public class PlayerMoveListeners implements Listener {
     public PlayerMoveListeners(ArmorAbilities armorAbilities) {
         plugin = armorAbilities;
         defineNoVineBlocks();
+    }
+
+    private static BlockFace yawToFace(float yaw) {
+        BlockFace[] axis = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
+        return axis[Math.round(yaw / 90.0F) & 0x3];
     }
 
     @EventHandler
@@ -59,14 +66,13 @@ public class PlayerMoveListeners implements Listener {
             if (player.hasPermission("armorabilities.scuba")) {
                 if ((headLoc.getBlock().getType() == Material.WATER) ||
                     (headLoc.getBlock().getType() == Material.STATIONARY_WATER)) {
-                    if (!player.hasPotionEffect(PotionEffectType.WATER_BREATHING) && !plugin.getManager().isScuba(
-                            player)) {
+                    if (!player.hasPotionEffect(PotionEffectType.WATER_BREATHING) &&
+                        !plugin.getManager().isScuba(player)) {
                         plugin.getManager().addScuba(player);
                         int scubaAmt = abilities.get(Ability.SCUBA);
-                        PotionEffect waterSurvival = new PotionEffect(PotionEffectType.WATER_BREATHING,
-                                                                      plugin.getData().getScubaTime() * scubaAmt *
-                                                                      scubaAmt * 20, 1);
-                        waterSurvival.apply(player);
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,
+                                                                plugin.getData().getScubaTime() * scubaAmt * scubaAmt *
+                                                                20, 1));
                     }
                 } else {
                     player.removePotionEffect(PotionEffectType.WATER_BREATHING);
@@ -78,11 +84,9 @@ public class PlayerMoveListeners implements Listener {
                 if ((headLoc.getBlock().getType() == Material.WATER) ||
                     (headLoc.getBlock().getType() == Material.STATIONARY_WATER)) {
                     int fastDig = plugin.getData().getScubaHasteNum();
-                    PotionEffect scubaHaste = new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, fastDig);
-                    scubaHaste.apply(player);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, fastDig));
 
-                    PotionEffect waterSee = new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 1);
-                    waterSee.apply(player);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 1));
                 } else {
                     player.removePotionEffect(PotionEffectType.FAST_DIGGING);
                     player.removePotionEffect(PotionEffectType.NIGHT_VISION);
@@ -97,12 +101,10 @@ public class PlayerMoveListeners implements Listener {
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
                 player.removePotionEffect(PotionEffectType.NIGHT_VISION);
             } else {
-                PotionEffect fastDig =
-                        new PotionEffect(PotionEffectType.FAST_DIGGING, 20000, plugin.getData().getMinerHasteNum());
-                fastDig.apply(player);
+                player.addPotionEffect(
+                        new PotionEffect(PotionEffectType.FAST_DIGGING, 20000, plugin.getData().getMinerHasteNum()));
 
-                PotionEffect nightVision = new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 1);
-                nightVision.apply(player);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 1));
             }
         }
 
@@ -141,15 +143,15 @@ public class PlayerMoveListeners implements Listener {
         }
 
         //add potion effects if the player is in lava
-        if (player.hasPermission("armorabilities.lavaswim") && abilities.containsKey(Ability.LAVA)) {
+        if (abilities.containsKey(Ability.LAVA) && player.hasPermission("armorabilities.lavaswim")) {
             int lavaAmt = abilities.get(Ability.LAVA);
-            if ((event.getTo().getBlock().getType() == Material.LAVA) || (event.getTo().getBlock().getType() == Material.STATIONARY_LAVA)) {
+            if ((event.getTo().getBlock().getType() == Material.LAVA) ||
+                (event.getTo().getBlock().getType() == Material.STATIONARY_LAVA)) {
                 if (!player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE) && !plugin.getManager().isLava(player)) {
                     plugin.getManager().addLava(player);
-                    PotionEffect lavaSurvival = new PotionEffect(PotionEffectType.FIRE_RESISTANCE,
-                                                                 plugin.getData().getLavaTime() * lavaAmt * lavaAmt *
-                                                                 20, 1);
-                    lavaSurvival.apply(player);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,
+                                                            plugin.getData().getLavaTime() * lavaAmt * lavaAmt * 20,
+                                                            1));
                 }
             } else if ((event.getFrom().getBlock().getType() != Material.LAVA) &&
                        (event.getFrom().getBlock().getType() != Material.STATIONARY_LAVA)) {
@@ -165,12 +167,6 @@ public class PlayerMoveListeners implements Listener {
             }
         }
     }
-
-    private static BlockFace yawToFace(float yaw) {
-        BlockFace[] axis = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
-        return axis[Math.round(yaw / 90.0F) & 0x3];
-    }
-
 
     private ArrayList<Block> getVines(Player player) {
         if (vineMap.containsKey(player.getName())) {

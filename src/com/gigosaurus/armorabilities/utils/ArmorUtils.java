@@ -14,17 +14,18 @@ import java.util.regex.Pattern;
 
 public final class ArmorUtils {
 
-    private static final Pattern SPACE = Pattern.compile("_", Pattern.LITERAL);
     public static final Pattern WORD = Pattern.compile("\\s+");
+    private static final Pattern SPACE = Pattern.compile("_", Pattern.LITERAL);
 
     private ArmorUtils() {
     }
 
     /**
      * Create the shapeless recipe for the given ability with the given materials
-     * @param armor the armor
+     *
+     * @param armor   the armor
      * @param ability the ability
-     * @param item the item to add to the armor to create the ability
+     * @param item    the item to add to the armor to create the ability
      */
     public static void addArmorRecipe(Material armor, Ability ability, int item) {
 
@@ -52,8 +53,8 @@ public final class ArmorUtils {
     }
 
     /**
-     *
      * @param item converts an item id into a lowercase readable item name
+     *
      * @return the name
      */
     public static String materialName(int item) {
