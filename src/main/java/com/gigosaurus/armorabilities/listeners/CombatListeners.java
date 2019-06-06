@@ -1,7 +1,5 @@
 package com.gigosaurus.armorabilities.listeners;
 
-import com.gigosaurus.armorabilities.ArmorAbilities;
-import com.gigosaurus.armorabilities.data.Ability;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +13,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
+
+import com.gigosaurus.armorabilities.ArmorAbilities;
+import com.gigosaurus.armorabilities.data.Ability;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class CombatListeners implements Listener {
 
     private static void strikeLightning(Entity p) {
         Location coords = p.getLocation();
-        coords.getWorld().strikeLightningEffect(coords);
+        p.getWorld().strikeLightningEffect(coords);
         Block block = coords.getBlock();
         block.setType(Material.AIR);
     }
@@ -48,7 +49,7 @@ public class CombatListeners implements Listener {
             player.getWorld().createExplosion(player.getLocation(), plugin.getData().getCreeperAbilityExplosion());
             ItemStack[] items = player.getInventory().getContents();
             event.getDrops().clear();
-            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new DropItems(items, player), 10L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new DropItems(items, player), 10);
         }
 
         plugin.getTask().addPlayer(player);
@@ -66,7 +67,7 @@ public class CombatListeners implements Listener {
 
         if (player.hasPermission("armorabilities.peace") && abilities.containsKey(Ability.PEACE)) {
 
-            //stop this player getting targetted
+            //stop this player getting targeted
             if ((mob.getLastDamageCause() == null) ||
                 ((mob.getLastDamageCause().getCause() != DamageCause.ENTITY_ATTACK) &&
                  (mob.getLastDamageCause().getCause() != DamageCause.PROJECTILE))) {
@@ -144,7 +145,7 @@ public class CombatListeners implements Listener {
             //give attacker health proportional to the damage dealt
             if (player.hasPermission("armorabilities.vampire") && abilities.containsKey(Ability.VAMPIRE)) {
                 long time = player.getWorld().getTime();
-                if ((time > 12300L) || (time < 23850L)) {
+                if ((time > 12300) && (time < 23850)) {
                     int damage = (int) (event.getDamage() / (100.0 / plugin.getData().getVampirePercent()));
                     if ((player.getHealth() + damage) <= 20) {
                         player.setHealth(player.getHealth() + damage);

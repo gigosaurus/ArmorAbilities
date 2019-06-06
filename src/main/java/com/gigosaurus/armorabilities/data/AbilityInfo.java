@@ -1,10 +1,11 @@
 package com.gigosaurus.armorabilities.data;
 
-import com.gigosaurus.armorabilities.utils.ArmorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import com.gigosaurus.armorabilities.utils.ArmorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public class AbilityInfo {
      *
      * @param ability  the ability
      * @param madeWith the name of the item the ability is made with
-     * @param item     the id of the item the ability is made with
+     * @param item     the item the ability is made with
      * @param types    the
      */
-    public AbilityInfo(Ability ability, String madeWith, int item, List<String> types) {
+    public AbilityInfo(Ability ability, String madeWith, String item, List<String> types) {
         for (String type : types) {
             for (Material mat : getArmor(type)) {
                 ArmorUtils.addArmorRecipe(mat, ability, item);
@@ -53,9 +54,8 @@ public class AbilityInfo {
      */
     public void messageInfo(Player player) {
         player.sendMessage(ability.getDescription());
-        player.sendMessage(
-                "The " + ChatColor.GOLD + ability + ChatColor.WHITE + " ability is made with " + ChatColor.GOLD +
-                madeWith);
+        player.sendMessage("The " + ChatColor.GOLD + ability + ChatColor.WHITE + " ability is made with "
+                + ChatColor.GOLD + madeWith);
         player.sendMessage(ChatColor.GRAY + "It can be made on these armor types: " + types);
     }
 
@@ -80,10 +80,10 @@ public class AbilityInfo {
             armorSet.add(Material.IRON_LEGGINGS);
             armorSet.add(Material.IRON_BOOTS);
         } else if (armorType.equalsIgnoreCase("gold")) {
-            armorSet.add(Material.GOLD_HELMET);
-            armorSet.add(Material.GOLD_CHESTPLATE);
-            armorSet.add(Material.GOLD_LEGGINGS);
-            armorSet.add(Material.GOLD_BOOTS);
+            armorSet.add(Material.GOLDEN_HELMET);
+            armorSet.add(Material.GOLDEN_CHESTPLATE);
+            armorSet.add(Material.GOLDEN_LEGGINGS);
+            armorSet.add(Material.GOLDEN_BOOTS);
         } else if (armorType.equalsIgnoreCase("chainmail")) {
             armorSet.add(Material.CHAINMAIL_HELMET);
             armorSet.add(Material.CHAINMAIL_CHESTPLATE);
@@ -97,7 +97,11 @@ public class AbilityInfo {
         } else if (armorType.equalsIgnoreCase("pumpkin")) {
             armorSet.add(Material.PUMPKIN);
         } else if (armorType.equalsIgnoreCase("skull")) {
-            armorSet.add(Material.SKULL_ITEM);
+            armorSet.add(Material.CREEPER_HEAD);
+            armorSet.add(Material.DRAGON_HEAD);
+            armorSet.add(Material.PLAYER_HEAD);
+            armorSet.add(Material.ZOMBIE_HEAD);
+            armorSet.add(Material.SKELETON_SKULL);
         } else {
 
             //something weird has been entered into the config

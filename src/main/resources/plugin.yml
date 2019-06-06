@@ -1,7 +1,8 @@
 name: ArmorAbilities
 author: gigosaurus
 description: Armor gives players abilities when wearing armor!
-version: 4.0
+version: 5.0.0
+api-version: 1.13
 main: com.gigosaurus.armorabilities.ArmorAbilities
 permissions:
     armorabilities.*:

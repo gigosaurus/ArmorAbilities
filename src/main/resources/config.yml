@@ -1,5 +1,5 @@
 SPEED:
-  Item: 331
+  Item: redstone
   SpeedBoost: 1
   Haste: 1
   ArmorTypes:
@@ -12,7 +12,7 @@ SPEED:
     - skull
 
 MOON:
-  Item: 288
+  Item: feather
   JumpBoost: 1
   ArmorTypes:
     - leather
@@ -24,7 +24,7 @@ MOON:
     - skull
 
 SCUBA:
-  Item: 338
+  Item: sugar_cane
   ScubaTime: 10
   Haste: 2
   ArmorTypes:
@@ -37,7 +37,7 @@ SCUBA:
     - skull
 
 LAVA:
-  Item: 378
+  Item: magma_cream
   LavaTime: 2
   ArmorTypes:
     - leather
@@ -49,7 +49,7 @@ LAVA:
     - skull
 
 RAGE:
-  Item: 369
+  Item: blaze_rod
   LightningDamage: 5
   FireTime: 4
   ArmorTypes:
@@ -62,7 +62,7 @@ RAGE:
     - skull
 
 PEACE:
-  Item: 372
+  Item: nether_wart
   ArmorTypes:
     - leather
     - iron
@@ -73,7 +73,7 @@ PEACE:
     - skull
 
 ASSASSIN:
-  Item: 368
+  Item: ender_pearl
   SneakDamage: 4
   ArmorTypes:
     - leather
@@ -85,7 +85,7 @@ ASSASSIN:
     - skull
 
 CREEPER:
-  Item: 289
+  Item: gunpowder
   ExplosionSize: 5
   BlockDamage: true
   ArmorTypes:
@@ -98,7 +98,7 @@ CREEPER:
     - skull
 
 SPIDER:
-  Item: 341
+  Item: slime_ball
   ArmorTypes:
     - leather
     - iron
@@ -109,7 +109,7 @@ SPIDER:
     - skull
 
 VAMPIRE:
-  Item: 370
+  Item: ghast_tear
   Percent: 25
   ArmorTypes:
     - leather
@@ -121,7 +121,7 @@ VAMPIRE:
     - skull
 
 MINER:
-  Item: 266
+  Item: gold_ingot
   Haste: 1
   ArmorTypes:
     - leather

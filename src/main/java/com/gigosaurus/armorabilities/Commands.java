@@ -1,7 +1,5 @@
 package com.gigosaurus.armorabilities;
 
-import com.gigosaurus.armorabilities.data.Ability;
-import com.gigosaurus.armorabilities.data.AbilityInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,6 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+
+import com.gigosaurus.armorabilities.data.Ability;
+import com.gigosaurus.armorabilities.data.AbilityInfo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -21,7 +23,7 @@ class Commands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String commandLabel, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("This command only works in-game.");
             return false;

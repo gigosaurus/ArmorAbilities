@@ -1,15 +1,16 @@
 package com.gigosaurus.armorabilities;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.gigosaurus.armorabilities.data.AbilityManager;
 import com.gigosaurus.armorabilities.data.ConfigData;
 import com.gigosaurus.armorabilities.listeners.CombatListeners;
 import com.gigosaurus.armorabilities.listeners.InventoryClick;
 import com.gigosaurus.armorabilities.listeners.JoinListeners;
 import com.gigosaurus.armorabilities.listeners.PlayerMoveListeners;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
@@ -19,8 +20,14 @@ public class ArmorAbilities extends JavaPlugin implements Listener {
     private AbilityManager manager;
     private AbilityCheckerTask task;
 
+    private static ArmorAbilities instance;
+    public static ArmorAbilities getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
+        instance = this;
         File configFile = new File(getDataFolder() + "/config.yml");
         if (!configFile.exists()) {
             saveDefaultConfig();

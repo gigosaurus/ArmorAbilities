@@ -1,11 +1,14 @@
 package com.gigosaurus.armorabilities.utils;
 
-import com.gigosaurus.armorabilities.data.Ability;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.gigosaurus.armorabilities.ArmorAbilities;
+import com.gigosaurus.armorabilities.data.Ability;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +30,12 @@ public final class ArmorUtils {
      * @param ability the ability
      * @param item    the item to add to the armor to create the ability
      */
-    public static void addArmorRecipe(Material armor, Ability ability, int item) {
+    public static void addArmorRecipe(Material armor, Ability ability, String item) {
+        Material mat = Material.matchMaterial(item);
+        if ((mat == null) || (mat == Material.AIR)) {
+            throw new IllegalArgumentException("Could not match material for item: " + item);
+        }
+
 
         String[] newNames = WORD.split(SPACE.matcher(armor.name()).replaceAll(" ").toLowerCase());
 
@@ -44,20 +52,15 @@ public final class ArmorUtils {
         ItemStack result = new ItemStack(armor);
         String newName = ability.toString() + ' ' + nameInOrder.get(1);
         ItemMeta im = result.getItemMeta();
+        //noinspection ConstantConditions - only null for AIR, which we know it isn't
         im.setDisplayName(newName);
         result.setItemMeta(im);
 
-        ShapelessRecipe sr = new ShapelessRecipe(new ItemStack(result)).addIngredient(Material.getMaterial(item))
-                                                                       .addIngredient(armor);
+        NamespacedKey key = new NamespacedKey(ArmorAbilities.getInstance(), armor.name() + '_' + ability + '_' + item);
+        ShapelessRecipe sr = new ShapelessRecipe(key, result)
+                .addIngredient(mat)
+                .addIngredient(armor);
         Bukkit.getServer().addRecipe(sr);
     }
 
-    /**
-     * @param item converts an item id into a lowercase readable item name
-     *
-     * @return the name
-     */
-    public static String materialName(int item) {
-        return SPACE.matcher(Material.getMaterial(item).name()).replaceAll(" ").toLowerCase();
-    }
 }

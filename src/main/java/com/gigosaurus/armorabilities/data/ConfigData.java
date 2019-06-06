@@ -1,8 +1,9 @@
 package com.gigosaurus.armorabilities.data;
 
-import com.gigosaurus.armorabilities.utils.ArmorUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,10 @@ public class ConfigData {
             ConfigurationSection conf = config.getConfigurationSection(ability.name());
 
             if (conf != null) {
-                int item = conf.getInt("Item");
+                String item = conf.getString("Item");
                 List<String> types = (List<String>) conf.getList("ArmorTypes");
-                if ((item != 0) && (types != null) && !types.isEmpty()) {
-                    abilities.add(new AbilityInfo(ability, ArmorUtils.materialName(item), item, types));
+                if ((item != null) && (types != null) && !types.isEmpty()) {
+                    abilities.add(new AbilityInfo(ability, item, item, types));
 
                     switch (ability) {
                         case MOON:
@@ -72,6 +73,7 @@ public class ConfigData {
         }
     }
 
+    @Nullable
     public AbilityInfo getInfo(String name) {
         for (AbilityInfo info : abilities) {
             if (name.equalsIgnoreCase(info.getAbility().name())) {

@@ -1,10 +1,5 @@
 package com.gigosaurus.armorabilities.listeners;
 
-import com.gigosaurus.armorabilities.ArmorAbilities;
-import com.gigosaurus.armorabilities.data.Ability;
-import com.gigosaurus.armorabilities.data.AbilityInfo;
-import com.gigosaurus.armorabilities.data.AbilityManager;
-import com.gigosaurus.armorabilities.utils.ArmorUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +11,12 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.gigosaurus.armorabilities.ArmorAbilities;
+import com.gigosaurus.armorabilities.data.Ability;
+import com.gigosaurus.armorabilities.data.AbilityInfo;
+import com.gigosaurus.armorabilities.data.AbilityManager;
+import com.gigosaurus.armorabilities.utils.ArmorUtils;
 
 public class InventoryClick implements Listener {
 
@@ -34,7 +35,7 @@ public class InventoryClick implements Listener {
 
         //if they are clicking to accept an anvil transaction
         if ((event.getView().getType() == InventoryType.ANVIL) && (event.getRawSlot() == 2) &&
-            (event.getCurrentItem() != null) && (event.getCurrentItem().getTypeId() != 0)) {
+            (event.getCurrentItem() != null)) {
 
             //check if their input and output items have the same ability
             ItemStack input = event.getCurrentItem();
@@ -60,8 +61,8 @@ public class InventoryClick implements Listener {
     }
 
     private AbilityInfo getInfoFromItem(ItemStack item) {
-        return ((item == null) || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) ? null :
-               plugin.getData().getInfo(ArmorUtils.WORD.split(item.getItemMeta().getDisplayName())[0]);
+        return ((item == null) || (item.getItemMeta() == null) || !item.getItemMeta().hasDisplayName()) ? null :
+                plugin.getData().getInfo(ArmorUtils.WORD.split(item.getItemMeta().getDisplayName())[0]);
     }
 
     @EventHandler
@@ -70,7 +71,7 @@ public class InventoryClick implements Listener {
         //check if a player is equipping an item from the hotbar
         if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             ItemStack item = event.getItem();
-            if ((item != null) && item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+            if ((item != null) && (item.getItemMeta() != null) && item.getItemMeta().hasDisplayName()) {
                 Ability ability =
                         AbilityManager.getAbility(ArmorUtils.WORD.split(item.getItemMeta().getDisplayName())[0]);
                 if (ability != null) {

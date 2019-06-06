@@ -1,15 +1,16 @@
 package com.gigosaurus.armorabilities.data;
 
-import com.gigosaurus.armorabilities.ArmorAbilities;
-import com.gigosaurus.armorabilities.utils.ArmorUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.gigosaurus.armorabilities.ArmorAbilities;
+import com.gigosaurus.armorabilities.utils.ArmorUtils;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
-import java.util.Map.Entry;
 
 public class AbilityManager {
 
@@ -29,6 +30,7 @@ public class AbilityManager {
      *
      * @return the ability
      */
+    @Nullable
     public static Ability getAbility(String name) {
         try {
             return Ability.valueOf(name.toUpperCase());
@@ -71,25 +73,25 @@ public class AbilityManager {
 
         //check which ability effects the player should have
         ItemStack head = player.getInventory().getHelmet();
-        if ((head != null) && (head.getItemMeta().getDisplayName() != null)) {
+        if ((head != null) && (head.getItemMeta() != null)) {
             armorNames[i] = ArmorUtils.WORD.split(head.getItemMeta().getDisplayName())[0];
             i++;
         }
 
         ItemStack chest = player.getInventory().getChestplate();
-        if ((chest != null) && (chest.getItemMeta().getDisplayName() != null)) {
+        if ((chest != null) && (chest.getItemMeta() != null)) {
             armorNames[i] = ArmorUtils.WORD.split(chest.getItemMeta().getDisplayName())[0];
             i++;
         }
 
         ItemStack legs = player.getInventory().getLeggings();
-        if ((legs != null) && (legs.getItemMeta().getDisplayName() != null)) {
+        if ((legs != null) && (legs.getItemMeta() != null)) {
             armorNames[i] = ArmorUtils.WORD.split(legs.getItemMeta().getDisplayName())[0];
             i++;
         }
 
         ItemStack feet = player.getInventory().getBoots();
-        if ((feet != null) && (feet.getItemMeta().getDisplayName() != null)) {
+        if ((feet != null) && (feet.getItemMeta() != null)) {
             armorNames[i] = ArmorUtils.WORD.split(feet.getItemMeta().getDisplayName())[0];
         }
 
@@ -144,8 +146,7 @@ public class AbilityManager {
             if (!newAbilities.get(Ability.SCUBA).equals(oldAbilities.get(Ability.SCUBA))) {
 
                 //check if they are underwater
-                if ((player.getEyeLocation().getBlock().getType() == Material.WATER) ||
-                    (player.getEyeLocation().getBlock().getType() == Material.STATIONARY_WATER)) {
+                if (player.getEyeLocation().getBlock().getType() == Material.WATER) {
 
                     //we only want to decrease the effect if needed, so there must be an old effect higher than new
                     if (oldAbilities.containsKey(Ability.SCUBA) &&
@@ -189,8 +190,7 @@ public class AbilityManager {
             if (!newAbilities.get(Ability.LAVA).equals(oldAbilities.get(Ability.LAVA))) {
 
                 //check if they are in lava
-                if ((player.getLocation().getBlock().getType() == Material.LAVA) ||
-                    (player.getLocation().getBlock().getType() == Material.STATIONARY_LAVA)) {
+                if (player.getLocation().getBlock().getType() == Material.LAVA) {
 
                     //we only want to decrease the effect if needed, so there must be an old effect higher than new
                     if (oldAbilities.containsKey(Ability.LAVA) &&
@@ -211,7 +211,7 @@ public class AbilityManager {
      *
      * @return the map
      */
-    public Map<Ability, Integer> getAbilityAmounts(String... names) {
+    private static Map<Ability, Integer> getAbilityAmounts(String... names) {
 
         //check the strength of each ability effect
         Map<Ability, Integer> abilityAmounts = new EnumMap<>(Ability.class);
@@ -227,14 +227,7 @@ public class AbilityManager {
         }
 
         //remove any which don't have the full set which require it
-        Iterator<Entry<Ability, Integer>> itr = abilityAmounts.entrySet().iterator();
-
-        while (itr.hasNext()) {
-            Entry<Ability, Integer> entry = itr.next();
-            if (entry.getKey().requiresFour() && (entry.getValue() != 4)) {
-                itr.remove();
-            }
-        }
+        abilityAmounts.entrySet().removeIf(entry -> entry.getKey().requiresFour() && (entry.getValue() != 4));
 
         return abilityAmounts;
     }
